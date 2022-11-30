@@ -2,12 +2,12 @@
 #include <string.h>
 #include <stdbool.h>
 
-typedef struct kunde {
+typedef struct {
     unsigned long nummer;
     char name[80];
     short geb_jahr;
     unsigned short geschlecht; // 0 - d, 1 - w, 2 - m
-}
+} kunde;
 
 #define NUM_PASSWDS 3
 const char *passwd[NUM_PASSWDS] = {
@@ -16,21 +16,29 @@ const char *passwd[NUM_PASSWDS] = {
 
 void dreieck(int anzahl_zeilen) {
     // print out triangle with 'X'
-    char arr[anzahl_zeilen];
+    char arr[1000];
+    int index=0;
     for (int i=0; i<anzahl_zeilen; i++) {
-        arr[i] = i*'X' +'\n';
-        arr[anzahl_zeilen-1] = i*'X' +'\0';
+        for (int j=0; j<i; j++) {
+            arr[index] = 'X';
+            index++;
+        }
+        arr[index] = '\n';
+        index++;
     }
+    arr[index] = '\0';
+    printf("%s", arr);
 }
 
 int quad(char art[], int width) {
     // returns length of string with 'X' in it
     for (int i=0; i<width; i++) {
-        char buff[] = {'X'};
-        char *ptr = buff;
-        art[i] = width* *ptr;
+        for(int j=0; i<width; j++) {
+            art[(i*(width+1)+j)] = 'X';
+        }
+        art[(i*(width+1)+width)] = '\n';
     }
-    art[width] = '\0';
+    art[(width+1)*width] = '\0';
     return strlen(art);
 }
 
@@ -66,13 +74,13 @@ int pwAbfrage(char pass[]) {
     // TODO
 }
 
-int einfuegen(struct kunde kdb[], int index) {
+int einfuegen(kunde kdb[], int index) {
     // inserts one client in the database at position 'index'
     // returns new highest index of db
     // TODO
 }
 
-void anzeigen(struct kunde kdb[], int index) {
+void anzeigen(kunde kdb[], int index) {
     // shows data at index in kdb
     // TODO
 }
@@ -85,15 +93,24 @@ void begruessung() {
 
 int main() {
     char art[1000];
+    kunde kdb[1000];
 
-    /*
-    switch (*expression*)
-    {
-    case *constant-expression*:
-        *code*
-        break;
+
+    char eingabe;
     
-    default:
-        break;
-    }*/
+    while (eingabe != 'x') {
+        
+        printf("Bitte geben Sie die Aufgabe an: ");
+        scanf(" %c", &eingabe);
+        switch (eingabe) {
+        case 'a': break;
+        case 'b': break;
+        case 'c': dreieck(5); break;
+        case 'd': quad(art, 5); break;
+        
+        case 'x': break;
+        default : eingabe =' ';
+        }
+    }
+    return 0;
 }
