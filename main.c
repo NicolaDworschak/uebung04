@@ -49,7 +49,7 @@ void quad2(char art[][7], int width) {
 
 unsigned string_length(char str[]) {
     // returns length of string
-    int length=0;
+    unsigned length=0;
     char next;
     while (str[length] != '\0') {
         length += 1;
