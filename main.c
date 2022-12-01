@@ -35,12 +35,16 @@ void dreieck(int anzahl_zeilen) {
 int quad(char art[], int width) {
     // returns length of string with 'X' in it
     for (int i=0; i<width; i++) {
-        for(int j=0; i<width; j++) {
+        for(int j=0; j<width; j++) {
             art[(i*(width+1)+j)] = 'X';
+            // printf(" | %d, %d", i, j);
         }
         art[(i*(width+1)+width)] = '\n';
     }
     art[(width+1)*width] = '\0';
+
+    //output
+    printf("%s", art);
     return strlen(art);
 }
 
@@ -54,7 +58,6 @@ void quad2(char art[][7], int width) {
 unsigned string_length(char str[]) {
     // returns length of string
     unsigned length=0;
-    char next;
     while (str[length] != '\0') {
         length += 1;
     }
@@ -64,13 +67,27 @@ unsigned string_length(char str[]) {
 // Aufgabe G
 bool palindrom(char str[]) {
     // checks wether string is a palindrom
-    // TODO
+    unsigned len = string_length(str);
+    for (int i=0; i<(len/2); i++){
+        if (str[i] != str[len-1-i]) 
+        return false;
+    }
+    return true;
 }
 
 //Aufgabe H
 void entferne(char str[], char c) {
     // removes given char from string on first occourance
-    // TODO 
+    unsigned len = string_length(str);
+    for (int i=0; i<len; i++) {
+        if (str[i] == c) {
+            for (int j=i; j<len; j++) {
+                str[j] = str[j+1];
+            }
+            break;
+        }
+    }
+    printf("%s\n", str);
 }
 
 //Aufgabe I
@@ -102,6 +119,8 @@ void begruessung() {
 int main() {
     char art[1000];
     kunde kdb[1000];
+    char str[] ={"Hello World!"};
+    char pal[] ={"anhna"};
 
     char eingabe;
     while (eingabe != 'x') {
@@ -113,11 +132,11 @@ int main() {
         case 'a': break;
         case 'b': break;
         case 'c': dreieck(5); break;
-        case 'd': quad(art, 5); break;
+        case 'd': printf("%d\n", quad(art, 5)); break;
         case 'e': break;
-        case 'f': break;
-        case 'g': break;
-        case 'h': break;
+        case 'f': printf("%u\n", string_length(str)); break;
+        case 'g': printf("%d\n", palindrom(pal)); break;
+        case 'h': entferne(str, 'l'); break;
         
         case 'x': break;
         default : eingabe =' ';
