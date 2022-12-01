@@ -98,7 +98,8 @@ int main() {
     while (eingabe != 'x') {
         
         printf("Bitte geben Sie die Aufgabe an: ");
-        scanf(" %c\n", &eingabe);
+        scanf(" %c", &eingabe);
+        
         switch (eingabe) {
         case 'a': break;
         case 'b': break;
