@@ -51,8 +51,7 @@ unsigned string_length(char str[]) {
     // returns length of string
     int length=0;
     char next;
-    while (next != '\0') {
-        next = str[length];
+    while (str[length] != '\0') {
         length += 1;
     }
     return length;
@@ -95,18 +94,20 @@ int main() {
     char art[1000];
     kunde kdb[1000];
 
-
     char eingabe;
-    
     while (eingabe != 'x') {
         
         printf("Bitte geben Sie die Aufgabe an: ");
-        scanf(" %c", &eingabe);
+        scanf(" %c\n", &eingabe);
         switch (eingabe) {
         case 'a': break;
         case 'b': break;
         case 'c': dreieck(5); break;
         case 'd': quad(art, 5); break;
+        case 'e': break;
+        case 'f': break;
+        case 'g': break;
+        case 'h': break;
         
         case 'x': break;
         default : eingabe =' ';
