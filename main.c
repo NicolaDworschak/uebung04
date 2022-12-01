@@ -14,6 +14,7 @@ const char *passwd[NUM_PASSWDS] = {
     "123foo", "bar456", "bla_blubb"
 };
 
+//Aufgabe C
 void dreieck(int anzahl_zeilen) {
     // print out triangle with 'X'
     char arr[1000];
@@ -30,6 +31,7 @@ void dreieck(int anzahl_zeilen) {
     printf("%s", arr);
 }
 
+//Aufgabe D
 int quad(char art[], int width) {
     // returns length of string with 'X' in it
     for (int i=0; i<width; i++) {
@@ -42,11 +44,13 @@ int quad(char art[], int width) {
     return strlen(art);
 }
 
+// Aufgabe E
 void quad2(char art[][7], int width) {
     // returns length of twodimensional string
     // TODO
 }
 
+//Aufgabe F
 unsigned string_length(char str[]) {
     // returns length of string
     unsigned length=0;
@@ -57,22 +61,26 @@ unsigned string_length(char str[]) {
     return length;
 }
 
+// Aufgabe G
 bool palindrom(char str[]) {
     // checks wether string is a palindrom
     // TODO
 }
 
+//Aufgabe H
 void entferne(char str[], char c) {
     // removes given char from string on first occourance
     // TODO 
 }
 
+//Aufgabe I
 int pwAbfrage(char pass[]) {
     // checks wether global list contains given string
     // returns index if string is found + msg box
     // TODO
 }
 
+//Aufgabe J
 int einfuegen(kunde kdb[], int index) {
     // inserts one client in the database at position 'index'
     // returns new highest index of db
@@ -84,6 +92,7 @@ void anzeigen(kunde kdb[], int index) {
     // TODO
 }
 
+//Aufgabe K
 void begruessung() {
     // ask for name and say hello via dynamic string
     // insert 'Hallo' + name in dynamic string and return
