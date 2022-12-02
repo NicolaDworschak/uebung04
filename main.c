@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 typedef struct {
     unsigned long nummer;
@@ -94,8 +95,29 @@ void entferne(char str[], char c) {
 int pwAbfrage(char pass[]) {
     // checks wether global list contains given string
     // returns index if string is found + msg box
-    // TODO
+    for (int i=0; i<NUM_PASSWDS; i++) {
+        if (strcmp(pass, passwd[i]) == 0)
+        return i;
+    }
+    return -1;
 }
+
+void aufgabeI() {
+    char eingabe[40];
+    int tmp;
+    for (int i=0; i<3; i++) {
+        printf("Bitte geben Sie Ihr Passwort ein: ");
+        scanf("%s", eingabe);
+        tmp = pwAbfrage(eingabe);
+        if (tmp != -1) {
+            printf("Sie haben das Passwort korrekt eingegeben! Es lautet: %s\n", eingabe);
+            break;
+        }
+        else 
+        printf("Sie haben die maximale Anzahl an Versuchen erreicht.");
+    }
+}
+
 
 //Aufgabe J
 int einfuegen(kunde kdb[], int index) {
@@ -113,6 +135,7 @@ void anzeigen(kunde kdb[], int index) {
 void begruessung() {
     // ask for name and say hello via dynamic string
     // insert 'Hallo' + name in dynamic string and return
+    // char *text = (char*)malloc(sizeof(char));
     // TODO
 }
 
@@ -137,6 +160,9 @@ int main() {
         case 'f': printf("%u\n", string_length(str)); break;
         case 'g': printf("%d\n", palindrom(pal)); break;
         case 'h': entferne(str, 'l'); break;
+        case 'i': aufgabeI();
+        case 'j': break;
+        case 'k': break;
         
         case 'x': break;
         default : eingabe =' ';
