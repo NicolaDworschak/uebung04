@@ -118,17 +118,90 @@ void aufgabeI() {
     }
 }
 
+unsigned long highest_client_number(kunde kdb[]) {
+    for (int i=0; i<(sizeof(kdb)/sizeof(kdb[0])); i++) {
+        int highest_client_number = kdb[0].nummer;
+        if (!kdb[0].nummer) {
+            return 0;
+        }
+        else if (kdb[i].nummer > highest_client_number) {
+            highest_client_number = kdb[i].nummer;
+        }
+    }
+    return highest_client_number;
+}
 
 //Aufgabe J
 int einfuegen(kunde kdb[], int index) {
     // inserts one client in the database at position 'index'
     // returns new highest index of db
-    // TODO
+    printf("Bitte geben Sie die Stelle an, an welcher Sie einen neuen Kunden hinzufügen möchten: ");
+    scanf("%d", index);
+
+    // move every client that's higher than index one to the 'right'
+    for (int i=index; i<(sizeof(kdb)/sizeof(kdb[0])); i++) {
+        kdb[i].nummer = kdb[i+1].nummer;
+        strcpy(kdb[i].name, kdb[i+1].name);
+        kdb[i].geb_jahr = kdb[i+1].geb_jahr;
+        kdb[i].geschlecht = kdb[i+1].geschlecht;
+    }
+    
+    unsigned long new_number;
+    char new_name;
+    short new_geb_jahr;
+    unsigned short new_geschlecht;
+
+    // get new client number
+    new_number = highest_client_number(kdb) + 1;
+
+    printf("Bitte geben Sie den Namen des Kunden, welcher hinzugefügt werden soll, ein: ");
+    scanf("%s", new_name);
+    printf("Bitte geben Sie das Geburtsjahr des Kunden, welcher hinzugefügt werden soll, ein: ");
+    scanf("%s", new_geb_jahr);
+    printf("Bitte geben Sie das Geschlecht des Kunden, welcher hinzugefügt werden soll, ein: ");
+    scanf("%s", new_geschlecht);
+
+    kdb[index].nummer = new_number;
+    strcpy(kdb[index].name, new_name);
+    kdb[index].geb_jahr = new_geb_jahr;
+    kdb[index].geschlecht = new_geschlecht;
+
+    int highest_index = (sizeof(kdb)/sizeof(kdb[0]) - 1);
+
+    return highest_index;
 }
 
 void anzeigen(kunde kdb[], int index) {
     // shows data at index in kdb
-    // TODO
+    int show;
+    printf("Bitte geben Sie den zu zeigenden Index an: ");
+    scanf("%d", show);
+
+    printf("Kundennummer: %u", kdb[show].nummer);
+    printf("Name: %s", kdb[show].name);
+    printf("Geburtsjahr: %hu", kdb[show].geb_jahr);
+    printf("Geschlecht (0 - d, 1 - w, 2 - m): %u", kdb[show].geschlecht);    
+}
+
+void menu(kunde kdb[]) {
+    while (true) {
+        int wahl, highest_index=(sizeof(kdb)/sizeof(kdb[0]) - 1);
+        printf("<1> Neuen Datensatz anlegen");
+        printf("<2> Vorhanden Datensatz abrufen");
+        printf("<0> Ende");
+        printf("Ihre Wahl: ");
+        scanf("%d", wahl);
+        
+        if (wahl == 0) {
+            break;
+        }
+        else if (wahl == 1) {
+            einfuegen(kdb, highest_index);
+        }
+        else {
+            anzeigen(kdb, highest_index);
+        }
+    }
 }
 
 //Aufgabe K
@@ -141,7 +214,7 @@ void begruessung() {
 
 int main() {
     char art[1000];
-    kunde kdb[1000];
+    kunde kdb[1000]; // Kundendatenbank
     char str[] ={"Hello World!"};
     char pal[] ={"anhna"};
 
@@ -161,7 +234,7 @@ int main() {
         case 'g': printf("%d\n", palindrom(pal)); break;
         case 'h': entferne(str, 'l'); break;
         case 'i': aufgabeI();
-        case 'j': break;
+        case 'j': menu(kdb);
         case 'k': break;
         
         case 'x': break;
