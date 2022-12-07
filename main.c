@@ -113,8 +113,9 @@ void aufgabeI() {
             printf("Sie haben das Passwort korrekt eingegeben! Es lautet: %s\n", eingabe);
             break;
         }
-        else 
-        printf("Sie haben die maximale Anzahl an Versuchen erreicht.");
+        else if (i==2 && tmp == -1) {
+            printf("Sie haben die maximale Anzahl an Versuchen erreicht.\n");
+        }
     }
 }
 
@@ -211,7 +212,7 @@ int main() {
     char art[1000];
     kunde kdb[1000]; // Kundendatenbank
     char str[] ={"Hello World!"};
-    char pal[] ={"anhna"};
+    char pal[] ={"anna"};
     int index=0;
 
     char eingabe;
@@ -224,7 +225,7 @@ int main() {
         case 'a': break;
         case 'b': break;
         case 'c': dreieck(5); break;
-        case 'd': printf("%d\n", quad(art, 5)); break;
+        case 'd': printf("%d\n", quad(art, 10)); break;
         case 'e': break;
         case 'f': printf("%u\n", string_length(str)); break;
         case 'g': printf("%d\n", palindrom(pal)); break;
