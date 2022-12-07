@@ -50,7 +50,7 @@ int quad(char art[], int width) {
 }
 
 // Aufgabe E
-void quad2(char art[][7], int width) {
+void quad2(char art[][1], int width) {
     // returns length of twodimensional string
     // TODO
 }
@@ -118,88 +118,78 @@ void aufgabeI() {
     }
 }
 
-unsigned long highest_client_number(kunde kdb[]) {
-    for (int i=0; i<(sizeof(kdb)/sizeof(kdb[0])); i++) {
+/*
+unsigned long highest_client_number(kunde kdb[], int index) {
+    for (int i=0; i<index; i++) {
         int highest_client_number = kdb[0].nummer;
         if (!kdb[0].nummer) {
-            return 0;
+            return 1;
         }
         else if (kdb[i].nummer > highest_client_number) {
             highest_client_number = kdb[i].nummer;
         }
     }
     return highest_client_number;
-}
+} 
+*/
 
 //Aufgabe J
 int einfuegen(kunde kdb[], int index) {
     // inserts one client in the database at position 'index'
     // returns new highest index of db
-    printf("Bitte geben Sie die Stelle an, an welcher Sie einen neuen Kunden hinzufügen möchten: ");
-    scanf("%d", index);
 
-    // move every client that's higher than index one to the 'right'
-    for (int i=index; i<(sizeof(kdb)/sizeof(kdb[0])); i++) {
-        kdb[i].nummer = kdb[i+1].nummer;
-        strcpy(kdb[i].name, kdb[i+1].name);
-        kdb[i].geb_jahr = kdb[i+1].geb_jahr;
-        kdb[i].geschlecht = kdb[i+1].geschlecht;
-    }
-    
     unsigned long new_number;
-    char new_name;
+    char new_name[80];
     short new_geb_jahr;
     unsigned short new_geschlecht;
 
     // get new client number
-    new_number = highest_client_number(kdb) + 1;
+    new_number = kdb[index].nummer + 1;
 
-    printf("Bitte geben Sie den Namen des Kunden, welcher hinzugefügt werden soll, ein: ");
+    printf("Bitte geben Sie den Namen des Kunden, welcher hinzugefuegt werden soll, ein: ");
     scanf("%s", new_name);
-    printf("Bitte geben Sie das Geburtsjahr des Kunden, welcher hinzugefügt werden soll, ein: ");
-    scanf("%s", new_geb_jahr);
-    printf("Bitte geben Sie das Geschlecht des Kunden, welcher hinzugefügt werden soll, ein: ");
-    scanf("%s", new_geschlecht);
+    printf("Bitte geben Sie das Geburtsjahr des Kunden, welcher hinzugefuegt werden soll, ein: ");
+    scanf("%hi", &new_geb_jahr);
+    printf("Bitte geben Sie das Geschlecht (0 - d, 1 - w, 2 - m) des Kunden, welcher hinzugefuegt werden soll, ein: ");
+    scanf("%hu", &new_geschlecht);
 
     kdb[index].nummer = new_number;
     strcpy(kdb[index].name, new_name);
     kdb[index].geb_jahr = new_geb_jahr;
     kdb[index].geschlecht = new_geschlecht;
 
-    int highest_index = (sizeof(kdb)/sizeof(kdb[0]) - 1);
-
-    return highest_index;
+    return (index += 1);
 }
 
 void anzeigen(kunde kdb[], int index) {
     // shows data at index in kdb
     int show;
     printf("Bitte geben Sie den zu zeigenden Index an: ");
-    scanf("%d", show);
+    scanf("%d", &show);
 
-    printf("Kundennummer: %u", kdb[show].nummer);
-    printf("Name: %s", kdb[show].name);
-    printf("Geburtsjahr: %hu", kdb[show].geb_jahr);
-    printf("Geschlecht (0 - d, 1 - w, 2 - m): %u", kdb[show].geschlecht);    
+    printf("Kundennummer: %u\n", kdb[show].nummer);
+    printf("Name: %s\n", kdb[show].name);
+    printf("Geburtsjahr: %hi\n", kdb[show].geb_jahr);
+    printf("Geschlecht (0 - d, 1 - w, 2 - m): %u\n", kdb[show].geschlecht);    
 }
 
-void menu(kunde kdb[]) {
+void menu(kunde kdb[], int index) {
     while (true) {
-        int wahl, highest_index=(sizeof(kdb)/sizeof(kdb[0]) - 1);
-        printf("<1> Neuen Datensatz anlegen");
-        printf("<2> Vorhanden Datensatz abrufen");
-        printf("<0> Ende");
+        int wahl;
+        printf("<1> Neuen Datensatz anlegen\n");
+        printf("<2> Vorhanden Datensatz abrufen\n");
+        printf("<0> Ende\n");
         printf("Ihre Wahl: ");
-        scanf("%d", wahl);
+        scanf("%d", &wahl);
         
         if (wahl == 0) {
-            break;
+            break;;
         }
         else if (wahl == 1) {
-            einfuegen(kdb, highest_index);
+            index = einfuegen(kdb, index);
         }
         else {
-            anzeigen(kdb, highest_index);
+            anzeigen(kdb, index);
         }
     }
 }
@@ -208,8 +198,13 @@ void menu(kunde kdb[]) {
 void begruessung() {
     // ask for name and say hello via dynamic string
     // insert 'Hallo' + name in dynamic string and return
-    // char *text = (char*)malloc(sizeof(char));
-    // TODO
+    char *text = (char*)malloc(sizeof(char));
+    printf("Bitte geben Sie Ihren Namen ein: ");
+    scanf(" %s", text);
+
+    printf("Hallo %s!\n", text);
+
+    free (text);
 }
 
 int main() {
@@ -217,6 +212,7 @@ int main() {
     kunde kdb[1000]; // Kundendatenbank
     char str[] ={"Hello World!"};
     char pal[] ={"anhna"};
+    int index=0;
 
     char eingabe;
     while (eingabe != 'x') {
@@ -233,10 +229,9 @@ int main() {
         case 'f': printf("%u\n", string_length(str)); break;
         case 'g': printf("%d\n", palindrom(pal)); break;
         case 'h': entferne(str, 'l'); break;
-        case 'i': aufgabeI();
-        case 'j': menu(kdb);
-        case 'k': break;
-        
+        case 'i': aufgabeI(); break;
+        case 'j': menu(kdb, index); break;
+        case 'k': begruessung(); break;
         case 'x': break;
         default : eingabe =' ';
         }
